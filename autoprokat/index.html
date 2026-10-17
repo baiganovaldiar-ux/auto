@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ключ — прокат авто</title>
+<style>
+:root{--bg:#edf1f3;--sf:#fff;--ink:#0e171b;--mut:#5b6a71;--pet:#0f3d4c;--pet2:#17566b;--red:#d7263d;--ln:#d9e0e4;--on:#fff;--stage:linear-gradient(180deg,#dbe8ee,#f4f8fa)}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1317;--sf:#131f26;--ink:#e8eef0;--mut:#8fa1a9;--pet:#0a2a35;--pet2:#12485a;--red:#ff4d63;--ln:#24343c;--stage:linear-gradient(180deg,#1b2d36,#142029)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,"Segoe UI",sans-serif}
+h1,h2,h3,.brand,.price,.plate,.stats b{font-family:Bahnschrift,"DIN Alternate","Arial Narrow",system-ui,sans-serif;letter-spacing:.01em}
+h2{margin:.2rem 0 .6rem}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+header{background:var(--pet);color:var(--on);display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;padding:.7rem 1.2rem;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px #0004}
+.brand{font-size:1.5rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.brand i{display:inline-block;width:14px;height:14px;border-radius:50%;border:4px solid var(--red)}
+nav{display:flex;gap:.2rem;flex-wrap:wrap}
+nav button{background:transparent;color:var(--on);border:0;border-bottom:3px solid transparent;border-radius:0;padding:.4rem .7rem}
+nav button.on{border-bottom-color:var(--red)}nav button.cta{background:var(--red);border-radius:8px;border-bottom-color:transparent}
+button,input,select{font:inherit;padding:.55rem .85rem;border:1.5px solid var(--ln);border-radius:8px;background:var(--sf);color:var(--ink)}
+button{cursor:pointer}.pri{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}.dng{color:var(--red);border-color:var(--red)}
+.hero{background:radial-gradient(120% 140% at 80% 0%,var(--pet2),var(--pet) 60%);color:var(--on);padding:2.2rem 1.2rem 0}
+.hero-in{max-width:1100px;margin:0 auto}
+.hero-top{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;align-items:center}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.02;margin:0 0 .7rem}
+.hero p{margin:0 0 1.2rem;max-width:44ch;opacity:.88;font-size:1.05rem}
+.kpis{display:flex;gap:1.4rem;flex-wrap:wrap;margin-bottom:1.4rem}.kpis div{display:grid}.kpis b{font:700 1.1rem Bahnschrift,system-ui,sans-serif}.kpis span{opacity:.75;font-size:.88rem}
+.hero-art{border-bottom:3px dashed #ffffff40;padding-bottom:.4rem}
+.hero-art svg{width:100%;height:auto;display:block;animation:drive 1.8s cubic-bezier(.2,.7,.2,1) both}
+@keyframes drive{from{transform:translateX(-60%);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.hero-art svg{animation:none}}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem;background:var(--sf);color:var(--ink);padding:1rem;border-radius:14px;margin:1.2rem 0 -2.4rem;position:relative;box-shadow:0 10px 30px #0003}
+.strip label{display:grid;gap:.2rem;font-size:.85rem;color:var(--mut)}
+main{max-width:1100px;margin:0 auto;padding:1.2rem}
+#heroBox:not(:empty)+main{padding-top:3.8rem}
+.chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.7rem}
+.chips button{border-radius:999px}.chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.5rem;margin-bottom:1.1rem}
+#list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem}
+#list>.pager,#list>.panel{grid-column:1/-1}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 12px 28px #0e171b22;transform:translateY(-3px)}
+.stage{position:relative;background:var(--stage);padding:1.6rem 1.2rem .8rem}
+.stage svg{width:100%;height:auto;display:block}
+.tag{position:absolute;left:.8rem;top:.8rem;background:var(--pet);color:#fff;border-radius:999px;padding:.1rem .7rem;font-size:.82rem}
+.stage .fav{position:absolute;right:.7rem;top:.6rem;width:2.4rem;height:2.4rem;padding:0;border-radius:50%}
+.fav{color:var(--mut);font-size:1.1rem;line-height:1}.fav.on{color:var(--red);border-color:var(--red)}
+.cbody{padding:.9rem 1.1rem 1.1rem;display:grid;gap:.55rem;flex:1;align-content:start}
+.cbody h2{font-size:1.4rem;margin:0}
+.specs{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;color:var(--mut);font-size:.92rem}
+.plate{display:inline-block;border:2px solid var(--ink);border-radius:5px;padding:0 .45rem;font-weight:700;font-size:.92rem;color:var(--ink)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;border-top:1px dashed var(--ln);padding-top:.8rem;margin-top:.3rem}
+.price{font-size:1.55rem;font-weight:700;line-height:1}.price small{font-size:.82rem;font-weight:400;color:var(--mut)}
+.btns{display:flex;gap:.4rem;flex-wrap:wrap}
+.mut{color:var(--mut);font-size:.92rem}.stars{color:#c98a00;font-weight:600}
+.pager{display:flex;gap:.3rem;justify-content:center;margin:.6rem 0;flex-wrap:wrap}.pager .on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.how{margin-top:2.2rem}.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.steps>div{background:var(--sf);border-radius:14px;padding:1rem 1.1rem;border:1px solid var(--ln)}
+.steps b{display:inline-grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--red);color:#fff;font-family:Bahnschrift,system-ui,sans-serif}
+.steps h3{margin:.4rem 0 .2rem}.steps p{margin:0;color:var(--mut)}
+.panel{background:var(--sf);border-top:5px solid var(--red);border-radius:0 0 12px 12px;padding:1.2rem;max-width:440px;margin:1.5rem auto;display:grid;gap:.6rem}
+.panel.wide{max-width:none;margin:1rem 0}
+.err{color:var(--red);font-size:.88rem}.wrap{overflow-x:auto;background:var(--sf);border-radius:12px;border:1px solid var(--ln)}
+table{width:100%;border-collapse:collapse}td,th{padding:.7rem;border-bottom:1px solid var(--ln);text-align:left}th{color:var(--mut);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem;margin-bottom:1rem}
+.stats>div{background:var(--sf);border-left:6px solid var(--red);border-radius:0 10px 10px 0;padding:.8rem 1rem;display:grid}
+.stats b{font-size:1.5rem}
+.bar{display:grid;grid-template-columns:120px 1fr auto;gap:.6rem;align-items:center}.bar i{display:block;height:14px;background:var(--pet2);border-radius:4px}
+.rev{border-bottom:1px solid var(--ln);padding:.5rem 0;display:grid;gap:.2rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+dialog{border:0;border-top:5px solid var(--red);border-radius:0 0 12px 12px;background:var(--sf);color:var(--ink);width:380px;max-width:92vw;max-height:90vh;overflow:auto}
+dialog.big{width:580px}dialog div{display:grid;gap:.6rem}dialog::backdrop{background:#000a}
+dialog .stage{border-radius:10px}
+footer{background:var(--pet);color:#ffffffcc;text-align:center;padding:1.4rem 1rem;margin-top:2rem;font-size:.92rem}
+.hide{display:none}#toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.7rem 1.1rem;border-radius:8px;z-index:20;max-width:90vw}
+@media(max-width:760px){.hero-top{grid-template-columns:1fr}.hero-art{order:-1}.bar{grid-template-columns:90px 1fr auto}}
+</style></head><body>
+<header><div class="brand"><i></i>Ключ</div><nav id="nav"></nav></header>
+<div id="heroBox"></div>
+<main id="app">Загрузка…</main><footer>АвтоПрокат. Учебный проект курса Advanced Backend &amp; DevOps.</footer><div id="toast" class="hide"></div>
+<script>
+const API='api.php/';
+let FAV=new Set(),atab='stats',csrf='',user=null,view='cars',state={page:1,f:{cat:''}},$=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>Number(n).toLocaleString('ru')+' ₸';
+const CAT={'':'Все',economy:'Эконом',business:'Бизнес',premium:'Премиум',suv:'Внедорожник',minivan:'Минивэн',electric:'Электро'};
+const PAL=['#c0392b','#2563eb','#0f3d4c','#27303a','#d97706','#059669','#6d28d9','#64748b','#cbd5e1','#7f1d1d','#0e7490'];
+const pick=k=>{let h=0;for(const ch of String(k))h=(h*31+ch.charCodeAt(0))>>>0;return PAL[h%PAL.length]};
+const SHAPE={
+ economy:['M12 70 L28 48 Q38 38 64 38 L136 38 Q158 38 172 52 L212 58 Q228 60 230 70 L230 76 L12 76Z','M50 48 L68 41 L104 41 L104 52Z M110 41 L136 41 Q150 42 160 52 L110 52Z'],
+ business:['M10 70 L28 49 Q40 38 68 38 L142 38 Q164 38 178 52 L216 58 Q232 60 234 70 L234 76 L10 76Z','M54 49 L72 41 L110 41 L110 52Z M116 41 L142 41 Q156 42 166 52 L116 52Z'],
+ premium:['M10 70 L34 52 Q50 42 78 42 L128 42 Q156 42 176 56 L218 60 Q234 62 236 70 L236 76 L10 76Z','M60 52 L82 45 L112 45 L116 54Z M122 45 L134 45 Q152 47 166 56 L122 56Z'],
+ suv:['M12 70 L16 40 Q18 30 30 30 L150 30 Q168 30 178 46 L216 52 Q230 54 232 66 L232 76 L12 76Z','M32 38 L98 38 L98 52 L30 52Z M104 38 L150 38 Q162 40 170 52 L104 52Z'],
+ minivan:['M10 70 L12 38 Q14 28 28 28 L168 28 Q184 28 192 44 L220 50 Q232 52 234 66 L234 76 L10 76Z','M24 36 L70 36 L70 50 L22 50Z M76 36 L122 36 L122 50 L76 50Z M128 36 L168 36 Q178 38 184 50 L128 50Z'],
+ electric:['M10 70 L32 50 Q48 40 80 40 L136 40 Q160 40 176 54 L218 58 Q234 60 236 70 L236 76 L10 76Z','M56 50 L84 43 L136 43 Q152 44 164 54 L56 54Z']};
+let GID=0;
+const car=(c,key)=>{const [body,glass]=SHAPE[c]||SHAPE.economy,col=pick(key||c),g='g'+(++GID);
+ return `<svg viewBox="0 0 244 100" fill="none" role="img" aria-label="Автомобиль"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+ <ellipse cx="122" cy="92" rx="104" ry="5" fill="#000" opacity=".2"/><path d="${body}" fill="${col}"/><path d="${body}" fill="url(#${g})"/>
+ <path d="${glass}" fill="#e9f4f8" opacity=".85"/><rect x="224" y="60" width="9" height="4" rx="2" fill="#fde68a"/><rect x="10" y="58" width="7" height="5" rx="2" fill="#ef4444"/>
+ <circle cx="62" cy="76" r="16" fill="#0b1418"/><circle cx="182" cy="76" r="16" fill="#0b1418"/>
+ <circle cx="62" cy="76" r="13" fill="#1d2a30"/><circle cx="182" cy="76" r="13" fill="#1d2a30"/><circle cx="62" cy="76" r="6" fill="#cfd8dc"/><circle cx="182" cy="76" r="6" fill="#cfd8dc"/></svg>`};
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.remove('hide');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.add('hide'),3500)}
+async function api(path,method='GET',data){
+  const r=await fetch(API+path,{method,headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},body:data?JSON.stringify(data):undefined});
+  let j;try{j=await r.json()}catch(e){throw{error:'Сервер вернул неверный ответ. Проверьте, что Apache и MySQL запущены.'}}
+  if(!r.ok)throw j;return j}
+async function init(){try{const j=await api('me');user=j.user;csrf=j.csrf;FAV=new Set(j.favorites||[]);go('cars')}
+  catch(e){$('#app').innerHTML='<div class="panel"><b>Не удалось открыть сайт</b><span class="err">'+esc(e.error||'Нет связи с сервером')+'</span></div>'}}
+function nav(){const n=$('#nav');n.innerHTML='';
+  const add=(t,v,c='')=>{const b=document.createElement('button');b.textContent=t;b.className=c+(view===v?' on':'');b.onclick=()=>go(v);n.append(b)};
+  add('Автомобили','cars');
+  if(user){add('Избранное','favorites');add('Брони','bookings');add('Профиль','profile');if(user.role==='admin')add('Управление','admin');
+    const o=document.createElement('button');o.textContent='Выйти, '+user.name;o.onclick=async()=>{await api('logout','POST');user=null;FAV=new Set();go('cars')};n.append(o)}
+  else{add('Войти','login');add('Создать аккаунт','register','cta')}}
+function go(v){view=v;nav();$('#heroBox').innerHTML='';({favorites:favs,profile:profile,cars:cars,login:()=>authForm('login'),register:()=>authForm('register'),bookings:bookings,admin:admin})[v]()}
+function authForm(mode){const reg=mode==='register';
+  $('#app').innerHTML=`<div class="panel"><h2>${reg?'Создать аккаунт':'Войти'}</h2>
+  ${reg?'<input id="n" placeholder="Имя" autocomplete="name"><span class="err" id="e_name"></span>':''}
+  <input id="em" type="email" placeholder="Email" autocomplete="email"><span class="err" id="e_email"></span>
+  <input id="pw" type="password" placeholder="Пароль, минимум 8 символов"><span class="err" id="e_password"></span>
+  <button class="pri" id="go">${reg?'Создать аккаунт':'Войти'}</button><span class="err" id="e_all"></span></div>`;
+  $('#go').onclick=async()=>{document.querySelectorAll('.err').forEach(e=>e.textContent='');
+    try{const j=await api(reg?'register':'login','POST',{name:reg?$('#n').value:undefined,email:$('#em').value,password:$('#pw').value});
+      user=j.user;try{FAV=new Set((await api('me')).favorites||[])}catch(_){}go('cars');toast('Вы вошли как '+user.name)}
+    catch(e){$('#e_all').textContent=e.error||'Ошибка';for(const k in e.fields||{})$('#e_'+k)&&($('#e_'+k).textContent=e.fields[k])}}}
+function cars(){const f=state.f;
+  $('#heroBox').innerHTML=`<section class="hero"><div class="hero-in"><div class="hero-top"><div><h1>Ключи от машины за пару минут</h1>
+  <p>Выберите даты, найдите свободный автомобиль и забронируйте онлайн. Цена считается сразу.</p>
+  <div class="kpis"><div><b>6 классов авто</b><span>от эконома до электро</span></div><div><b>Бронь онлайн</b><span>в любое время</span></div><div><b>Отмена в клик</b><span>в личном кабинете</span></div></div></div>
+  <div class="hero-art">${car('premium','hero')}</div></div>
+  <div class="strip"><label>Забрать<input id="fr" type="date" value="${f.from||''}"></label><label>Вернуть<input id="to" type="date" value="${f.to||''}"></label>
+  <label>Поиск<input id="q" placeholder="Марка или модель" value="${esc(f.q||'')}"></label><label>&nbsp;<button class="pri" id="ap">Показать свободные</button></label></div></div></section>`;
+  $('#app').innerHTML=`<div class="chips" id="chips">${Object.entries(CAT).map(([k,v])=>`<button class="${f.cat===k?'on':''}" data-c="${k}">${v}</button>`).join('')}</div>
+  <div class="row2"><input id="mp" type="number" min="0" placeholder="Цена в сутки, до" value="${esc(f.max_price||'')}">
+  <select id="so"><option value="id|asc">Сортировка: по умолчанию</option><option value="price_per_day|asc">Сначала дешёвые</option><option value="price_per_day|desc">Сначала дорогие</option><option value="year|desc">Сначала новые</option><option value="brand|asc">Марка А–Я</option><option value="avg_rating|desc">По рейтингу</option></select></div><div id="list"></div><section class="how"><h2>Как это работает</h2><div class="steps">
+<div><b>1</b><h3>Выберите автомобиль</h3><p>Фильтры по классу, цене и свободным датам помогут найти нужный вариант.</p></div>
+<div><b>2</b><h3>Забронируйте онлайн</h3><p>Укажите даты, итоговая сумма посчитается автоматически.</p></div>
+<div><b>3</b><h3>Заберите ключи</h3><p>Бронь можно посмотреть или отменить в разделе «Брони».</p></div></div></section>`;
+  $('#so').value=f.so||'id|asc';
+  const apply=()=>{state.f={cat:state.f.cat,q:$('#q').value,max_price:$('#mp').value,from:$('#fr').value,to:$('#to').value,so:$('#so').value};state.page=1;load()};
+  $('#ap').onclick=apply;$('#mp').onchange=apply;$('#so').onchange=apply;
+  document.querySelectorAll('#chips button').forEach(b=>b.onclick=()=>{state.f.cat=b.dataset.c;apply();document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on',x===b))});
+  load()}
+const stars=r=>r?'<span class="stars">★ '+Number(r).toFixed(1)+'</span>':'<span class="mut">Нет отзывов</span>';
+function carRow(c){return `<article class="card"><div class="stage"><span class="tag">${esc(CAT[c.category]||c.category)}</span>
+<button class="fav ${FAV.has(+c.id)?'on':''}" data-f="${c.id}" aria-label="В избранное" title="В избранное">♥</button>${car(c.category,c.brand+c.model)}</div>
+<div class="cbody"><div><h2>${esc(c.brand)} ${esc(c.model)}</h2><div>${stars(c.avg_rating)} <span class="mut">${Number(c.reviews_count)||0} отзывов</span></div></div>
+<div class="specs"><span class="plate">${c.year}</span><span>${c.seats} мест</span><span>${c.transmission==='AT'?'Автомат':'Механика'}</span></div>
+<div class="mut">${esc(c.description)}</div>
+<div class="foot"><div class="price">${money(c.price_per_day)}<small> / сутки</small></div><div class="btns"><button data-i="${c.id}">Подробнее</button><button class="pri" data-id="${c.id}" data-n="${esc(c.brand+' '+c.model)}">Забронировать</button></div></div></div></article>`}
+function bindRows(root){
+  root.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>book(+b.dataset.id,b.dataset.n));
+  root.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>details(+b.dataset.i));
+  root.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>toggleFav(+b.dataset.f,b))}
+async function toggleFav(id,btn){if(!user){toast('Войдите, чтобы добавлять в избранное');return go('login')}
+  try{if(FAV.has(id)){await api('favorites/'+id,'DELETE');FAV.delete(id)}else{await api('favorites/'+id,'POST',{});FAV.add(id)}
+    btn.classList.toggle('on',FAV.has(id));if(view==='favorites')favs()}catch(e){toast(e.error)}}
+async function load(){const f=state.f,[s,d]=(f.so||'id|asc').split('|');
+  const p=new URLSearchParams({page:state.page,per_page:9,sort:s,dir:d});
+  if(f.cat)p.set('category',f.cat);['q','max_price','from','to'].forEach(k=>f[k]&&p.set(k,f[k]));
+  try{const j=await api('cars?'+p);
+  $('#list').innerHTML=(j.data.map(carRow).join('')||'<div class="panel wide">Свободных автомобилей не найдено. Измените даты или уберите фильтры.</div>')
+   +`<div class="pager">${Array.from({length:j.meta.pages},(_,i)=>`<button class="${i+1===j.meta.page?'on':''}" data-p="${i+1}">${i+1}</button>`).join('')}</div>`;
+  bindRows($('#list'));
+  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{state.page=+b.dataset.p;load();scrollTo({top:0})})}
+  catch(e){$('#list').innerHTML='<span class="err">'+esc(e.error)+'</span>'}}
+async function favs(){if(!user)return go('login');const j=await api('favorites');
+  $('#app').innerHTML='<h2>Избранное</h2><div id="list">'+(j.data.map(carRow).join('')||'<div class="panel wide">Здесь пока пусто. Нажмите ♥ у автомобиля в каталоге.</div>')+'</div>';
+  bindRows($('#list'))}
+async function details(id){
+  let c,rv;try{[c,rv]=await Promise.all([api('cars/'+id),api('reviews?car_id='+id)])}catch(e){return toast(e.error)}
+  const d=document.createElement('dialog');d.className='big';
+  const avg=rv.data.length?rv.data.reduce((a,x)=>a+Number(x.rating),0)/rv.data.length:0;
+  d.innerHTML=`<div><div class="stage">${car(c.category,c.brand+c.model)}</div><h2 style="margin:0">${esc(c.brand)} ${esc(c.model)}, ${c.year}</h2>
+  <div class="mut">${esc(c.description)}</div><div class="price">${money(c.price_per_day)}<small> / сутки</small></div>
+  <h3 style="margin:.4rem 0 0">Отзывы ${avg?stars(avg):''}</h3>
+  <div>${rv.data.map(x=>`<div class="rev"><div><b>${esc(x.name)}</b> <span class="stars">${'★'.repeat(x.rating)}</span></div><div>${esc(x.comment)}</div>${user&&(user.id===+x.user_id||user.role==='admin')?`<div><button class="dng" data-r="${x.id}">Удалить отзыв</button></div>`:''}</div>`).join('')||'<div class="mut">Отзывов пока нет.</div>'}</div>
+  ${user?`<select id="rr"><option value="5">5, отлично</option><option value="4">4, хорошо</option><option value="3">3, нормально</option><option value="2">2, плохо</option><option value="1">1, ужасно</option></select>
+  <input id="rc" maxlength="500" placeholder="Ваш отзыв"><span class="err" id="re"></span><button class="pri" id="rs">Оставить отзыв</button>`:'<div class="mut">Войдите, чтобы оставить отзыв.</div>'}
+  <button id="rx">Закрыть</button></div>`;
+  document.body.append(d);d.showModal();
+  const again=()=>{d.close();d.remove();details(id);if(view==='cars')load()};
+  d.querySelector('#rx').onclick=()=>{d.close();d.remove()};
+  d.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{try{await api('reviews/'+b.dataset.r,'DELETE');again()}catch(e){toast(e.error)}});
+  const rs=d.querySelector('#rs');if(rs)rs.onclick=async()=>{try{await api('reviews','POST',{car_id:id,rating:+d.querySelector('#rr').value,comment:d.querySelector('#rc').value});again()}catch(e){d.querySelector('#re').textContent=e.error}}}
+async function profile(){if(!user)return go('login');const j=await api('profile');
+  $('#app').innerHTML=`<h2>Профиль</h2><div class="stats"><div><b>${j.bookings}</b><span class="mut">активных броней</span></div><div><b>${money(j.spent)}</b><span class="mut">сумма броней</span></div><div><b>${esc(String(j.since).slice(0,10))}</b><span class="mut">дата регистрации</span></div></div>
+  <div class="panel"><h3 style="margin:0">Данные</h3><div class="mut">${esc(user.email)}${user.role==='admin'?', администратор':''}</div>
+  <input id="pn" value="${esc(user.name)}"><span class="err" id="e_name"></span><button class="pri" id="sn">Сохранить имя</button></div>
+  <div class="panel"><h3 style="margin:0">Смена пароля</h3><input id="po" type="password" placeholder="Текущий пароль"><span class="err" id="e_old"></span>
+  <input id="pp" type="password" placeholder="Новый пароль, минимум 8 символов"><span class="err" id="e_new"></span><button class="pri" id="sp">Сменить пароль</button></div>`;
+  const clr=()=>document.querySelectorAll('.err').forEach(e=>e.textContent='');
+  $('#sn').onclick=async()=>{clr();try{const r=await api('profile','PUT',{name:$('#pn').value});user=r.user;nav();toast('Имя сохранено')}catch(e){$('#e_name').textContent=(e.fields||{}).name||e.error}};
+  $('#sp').onclick=async()=>{clr();try{await api('password','POST',{old:$('#po').value,new:$('#pp').value});$('#po').value=$('#pp').value='';toast('Пароль изменён')}
+    catch(e){$('#e_old').textContent=(e.fields||{}).old||'';$('#e_new').textContent=(e.fields||{}).new||(e.fields?'':e.error)}}}
+function book(id,name){if(!user){toast('Войдите, чтобы забронировать');return go('login')}
+  const t=new Date().toISOString().slice(0,10),d=document.createElement('dialog');
+  d.innerHTML=`<div><h2 style="margin:0">${name}</h2><label>Забрать<input id="bs" type="date" min="${t}" value="${state.f.from||t}"></label>
+  <label>Вернуть<input id="be" type="date" min="${t}" value="${state.f.to||''}"></label><span class="err" id="be_err"></span>
+  <button class="pri" id="bok">Забронировать</button><button id="bno">Отмена</button></div>`;
+  document.body.append(d);d.showModal();
+  d.querySelector('#bno').onclick=()=>{d.close();d.remove()};
+  d.querySelector('#bok').onclick=async()=>{try{const j=await api('bookings','POST',{car_id:id,start:d.querySelector('#bs').value,end:d.querySelector('#be').value});
+    d.close();d.remove();toast(`Забронировано: ${j.days} сут., итого ${money(j.total)}`)}catch(x){d.querySelector('#be_err').textContent=x.error}}}
+async function bookings(){if(!user)return go('login');const j=await api('bookings');
+  $('#app').innerHTML=`<h2>${user.role==='admin'?'Все брони':'Мои брони'}</h2><div class="wrap"><table><tr><th>Автомобиль</th><th>Забрать</th><th>Вернуть</th><th>Сумма</th><th>Статус</th><th></th></tr>
+  ${j.data.map(b=>`<tr><td>${esc(b.brand)} ${esc(b.model)}${user.role==='admin'?'<br><span class="mut">'+esc(b.email)+'</span>':''}</td><td>${esc(b.start_date)}</td><td>${esc(b.end_date)}</td><td>${money(b.total)}</td><td>${b.status==='active'?'Активна':'Отменена'}</td>
+  <td>${b.status==='active'?`<button class="dng" data-x="${b.id}">Отменить</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6">Броней пока нет. Выберите автомобиль в каталоге.</td></tr>'}</table></div>`;
+  document.querySelectorAll('[data-x]').forEach(b=>b.onclick=async()=>{await api('bookings/'+b.dataset.x,'DELETE');bookings()})}
+async function admin(){if(!user||user.role!=='admin')return go('cars');
+  $('#app').innerHTML=`<h2>Управление</h2><div class="chips">${[['stats','Статистика'],['cars','Автомобили'],['users','Пользователи']].map(([k,v])=>`<button class="${atab===k?'on':''}" data-t="${k}">${v}</button>`).join('')}</div><div id="ab"></div>`;
+  document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{atab=b.dataset.t;admin()});
+  try{await ({stats:aStats,cars:aCars,users:aUsers})[atab]()}catch(e){$('#ab').innerHTML='<span class="err">'+esc(e.error)+'</span>'}}
+async function aStats(){const s=await api('stats'),ms=s.months.slice().reverse(),mx=Math.max(1,...ms.map(m=>+m.rev)),tx=Math.max(1,...s.top.map(t=>+t.cnt));
+  $('#ab').innerHTML=`<div class="stats"><div><b>${s.users}</b><span class="mut">пользователей</span></div><div><b>${s.cars}</b><span class="mut">автомобилей</span></div>
+  <div><b>${s.active}</b><span class="mut">активных броней</span></div><div><b>${s.cancelled}</b><span class="mut">отменённых</span></div><div><b>${money(s.revenue)}</b><span class="mut">выручка</span></div></div>
+  <div class="panel wide"><h3 style="margin:0">Выручка по месяцам</h3>${ms.map(m=>`<div class="bar"><span>${esc(m.m)}</span><i style="width:${Math.max(2,Math.round(m.rev/mx*100))}%"></i><b>${money(m.rev)}</b></div>`).join('')||'<div class="mut">Броней пока нет.</div>'}</div>
+  <div class="panel wide"><h3 style="margin:0">Популярные автомобили</h3>${s.top.map(t=>`<div class="bar"><span>${esc(t.name)}</span><i style="width:${Math.max(2,Math.round(t.cnt/tx*100))}%"></i><b>${t.cnt} бр.</b></div>`).join('')||'<div class="mut">Броней пока нет.</div>'}</div>`}
+async function aCars(){const j=await api('cars?per_page=50');
+  $('#ab').innerHTML=`<p><button class="pri" id="add">Добавить автомобиль</button></p><div class="wrap"><table>${j.data.map(c=>`<tr><td>${esc(c.brand)} ${esc(c.model)} (${c.year})</td><td>${esc(CAT[c.category]||c.category)}</td><td>${money(c.price_per_day)}</td>
+  <td><button data-e="${c.id}">Изменить</button> <button class="dng" data-d="${c.id}">Удалить</button></td></tr>`).join('')}</table></div>`;
+  $('#add').onclick=()=>carForm();
+  document.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>carForm(j.data.find(c=>c.id==b.dataset.e)));
+  document.querySelectorAll('[data-d]').forEach(b=>b.onclick=async()=>{if(confirm('Удалить автомобиль вместе с бронями и отзывами?')){await api('cars/'+b.dataset.d,'DELETE');aCars()}})}
+function carForm(c){c=c||{};const d=document.createElement('dialog');
+  d.innerHTML=`<div><h2 style="margin:0">${c.id?'Изменить автомобиль':'Новый автомобиль'}</h2>
+  <div class="two"><input id="f1" placeholder="Марка" value="${esc(c.brand)}"><input id="f2" placeholder="Модель" value="${esc(c.model)}"></div>
+  <div class="two"><input id="f3" type="number" placeholder="Год" value="${esc(c.year)}"><input id="f5" type="number" placeholder="Цена в сутки" value="${esc(c.price_per_day)}"></div>
+  <div class="two"><select id="f4">${Object.entries(CAT).filter(([k])=>k).map(([k,v])=>`<option value="${k}" ${c.category===k?'selected':''}>${v}</option>`).join('')}</select>
+  <input id="f6" type="number" min="1" max="12" placeholder="Мест" value="${esc(c.seats||5)}"></div>
+  <select id="f7"><option value="AT" ${c.transmission!=='MT'?'selected':''}>Автомат</option><option value="MT" ${c.transmission==='MT'?'selected':''}>Механика</option></select>
+  <input id="f8" maxlength="255" placeholder="Описание" value="${esc(c.description)}"><span class="err" id="fe"></span>
+  <button class="pri" id="fs">Сохранить</button><button id="fx">Отмена</button></div>`;
+  document.body.append(d);d.showModal();
+  d.querySelector('#fx').onclick=()=>{d.close();d.remove()};
+  d.querySelector('#fs').onclick=async()=>{const v=i=>d.querySelector('#'+i).value;
+    try{await api('cars'+(c.id?'/'+c.id:''),c.id?'PUT':'POST',{brand:v('f1'),model:v('f2'),year:+v('f3'),price_per_day:+v('f5'),category:v('f4'),seats:+v('f6'),transmission:v('f7'),description:v('f8')});
+      d.close();d.remove();toast('Сохранено');aCars()}
+    catch(e){d.querySelector('#fe').textContent=e.error+(e.fields?': '+Object.values(e.fields).join(', '):'')}}}
+async function aUsers(){const j=await api('users');
+  $('#ab').innerHTML=`<div class="wrap"><table><tr><th>Имя</th><th>Email</th><th>Роль</th><th>Регистрация</th></tr>${j.data.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td>
+  <td><select data-u="${u.id}" ${+u.id===user.id?'disabled':''}><option value="user" ${u.role==='user'?'selected':''}>Пользователь</option><option value="admin" ${u.role==='admin'?'selected':''}>Администратор</option></select></td><td>${esc(String(u.created_at).slice(0,10))}</td></tr>`).join('')}</table></div>`;
+  document.querySelectorAll('[data-u]').forEach(sel=>sel.onchange=async()=>{try{await api('users/'+sel.dataset.u,'PUT',{role:sel.value});toast('Роль изменена')}catch(e){toast(e.error);aUsers()}})}
+init();
+</script></body></html>
